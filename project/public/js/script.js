@@ -52,3 +52,4 @@ function saveClick() {
     guestCountChange.textContent = 0;
     guestCount = 0;
 }
+

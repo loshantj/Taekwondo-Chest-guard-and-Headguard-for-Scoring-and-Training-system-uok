@@ -1,5 +1,9 @@
 #include <ESP8266WiFi.h>
 #include <Wire.h>
+#include <Adafruit_BMP085.h>
+
+Adafruit_BMP085 bmp;
+int person1 = 0;
 
 const char* ssid = "Taekwondo";
 const char* password = "password";
@@ -8,6 +12,10 @@ WiFiServer server(80);
 
 void setup() {
   Serial.begin(115200);
+  if (!bmp.begin()) {
+    Serial.println("Could not find a valid BMP085 sensor, check wiring!");
+    while (1) {}
+  }
   Wire.begin();
   WiFi.softAP(ssid, password);
   server.begin();
@@ -18,8 +26,22 @@ void loop() {
   WiFiClient client = server.available();
   float pressure1 = 10.50;
   float pressure2 = 20.50;
-  int person1 = 10;
+  //int person1 = 10;
   int person2 = 20;
+  
+  float pressure = bmp.readPressure() / 100.0F; // convert to hPa
+  Serial.print("Pressure = ");
+  Serial.print(pressure);
+  Serial.println(" hPa");
+
+  if (pressure > 1050.0F) { // if pressure exceeds 1000 hPa
+    //digitalWrite(LED_PIN, HIGH);
+    Serial.print("points =");Serial.print(person1 = person1 + 5); // turn on D5 pin
+  } else {
+    //digitalWrite(LED_PIN, LOW); // turn off D5 pin
+    Serial.print("points =");Serial.print(person1);
+  }
+  
 
   Wire.beginTransmission(0x60);
   Wire.write(0x08);
@@ -66,6 +88,7 @@ void loop() {
       client.println("<html><body><h1>Page not found</h1></body></html>");
     }
   }
+  delay(300);  
 }
 
 void sendPressure1(WiFiClient client, float pressure1) {
