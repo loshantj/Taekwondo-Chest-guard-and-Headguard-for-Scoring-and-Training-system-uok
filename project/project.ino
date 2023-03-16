@@ -18,7 +18,7 @@ void loop() {
   WiFiClient client = server.available();
   float pressure1 = 10.50;
   float pressure2 = 20.50;
-  int person1 = 10;
+  int person1 = 0;
   int person2 = 20;
 
   Wire.beginTransmission(0x60);
