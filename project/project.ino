@@ -26,7 +26,11 @@ void loop() {
   WiFiClient client = server.available();
   float pressure1 = 10.50;
   float pressure2 = 20.50;
+<<<<<<< HEAD
   //int person1 = 10;
+=======
+  int person1 = 0;
+>>>>>>> f6a7e4c84fcb07c075f43932abb6ea32724aef54
   int person2 = 20;
   
   float pressure = bmp.readPressure() / 100.0F; // convert to hPa
